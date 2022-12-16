@@ -46,12 +46,16 @@ exports.verifyPayment = async (req, res) => {
                                 }
                             }
                         );
-                        console.log(response.data);
-                        existPayment.status = true;
-                        await existPayment.save();
-                        paymentOTP.status = true;
-                        await paymentOTP.save();
-                        res.json(response.data);
+                        if(response.data.response.responseCode == '00'){
+                            console.log(response.data);
+                            existPayment.status = true;
+                            await existPayment.save();
+                            paymentOTP.status = true;
+                            await paymentOTP.save();
+                            res.json(response.data);
+                        }else{
+                            res.json(response.data);
+                        }
                     }else{
                         res.json({
                             'response': {

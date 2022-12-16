@@ -65,13 +65,13 @@ function Navbar({user}) {
 
                 ) : (
                     <div className="navItems">
-                        <Link className="link" to="/login">
+                        <BubblyLink colorStart="#F9B500" className="link" to="/login">
 
                             <button className="btnButton btnDN">Đăng nhập</button>
-                        </Link>
-                        <Link className="link" to="/register">
+                        </BubblyLink>
+                        <BubblyLink colorStart="#F9B500" className="link" to="/register">
                             <button className="btnButton btnDK">Đăng ký</button>
-                        </Link>
+                        </BubblyLink>
 
                     </div>
                 )}

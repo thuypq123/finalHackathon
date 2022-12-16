@@ -15,9 +15,9 @@ exports.tranhis = async (req, res) => {
                 if(fromDate.length && toDate.length){
                     const newToDate = toDate.split("-").reverse().join("-");
                     const newFromDate = fromDate.split("-").reverse().join("-");
-                    var existTransaction = await transaction.find({ $or:[{accountNo: accountNo}, {toAccNo:accountNo}], date: { $gte: newFromDate, $lte: newToDate }}).lean();
+                    var existTransaction = await transaction.find({email:existUser.email, $or:[{accountNo: accountNo}, {toAccNo:accountNo}], date: { $gte: newFromDate, $lte: newToDate }}).lean();
                 }else{
-                    var existTransaction = await transaction.find({ $or:[{accountNo: accountNo}, {toAccNo:accountNo}]}).lean().limit(3);
+                    var existTransaction = await transaction.find({email:existUser.email, $or:[{accountNo: accountNo}, {toAccNo:accountNo}]}).lean().limit(3);
                 }
                 existTransaction.map((item) => {
                     if(item.accountNo == accountNo){

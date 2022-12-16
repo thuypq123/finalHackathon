@@ -91,7 +91,7 @@ function GetPayment({inSystem, type}) {
                         <TableCell align="right">SDID</TableCell>
                         <TableCell align="right">description</TableCell>
                         <TableCell align="right">Số Tiền</TableCell>
-                        <TableCell align="right">Thời Gian</TableCell>
+                        <TableCell align="right">Trạng thái</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
@@ -106,7 +106,7 @@ function GetPayment({inSystem, type}) {
                         <TableCell align="right">{row.sdId}</TableCell>
                         <TableCell align="right">{row.description}</TableCell>
                         <TableCell align="right">{row.amount}</TableCell>
-                        <TableCell align="right">{row.date}</TableCell>
+                        <TableCell align="right">{row.status?'Thành Công': 'Thất Bại'}</TableCell>
                         </TableRow>
                     ))}
                     </TableBody>
