@@ -10,6 +10,7 @@ import { JSEncrypt } from "jsencrypt";
 import { useEffect } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import swal from 'sweetalert';
 
 function Login() {
     const [userName, setUserName] = useState("");
@@ -71,7 +72,21 @@ function Login() {
                         window.location.replace("/verify_login")
                         navigate("/verify_login", { state: { data: getEmail } });
                     } else {
-                        alert(res.data.responseMessage)
+                        if(res.data.responseCode==="012"){
+                            swal({
+                                title: "Thông báo",
+                                text: res.data.responseMessage + " sai quá 5 lần sẽ bị khóa tài khoản ",
+                                icon: "warning",
+                                button: "OK",
+                            })
+                        }else{
+                            swal({
+                                title: "Thông báo",
+                                text: res.data.responseMessage,
+                                icon: "warning",
+                                button: "OK",
+                            })
+                        }
                     }
                 }
                 ).catch(error => console.log(error))

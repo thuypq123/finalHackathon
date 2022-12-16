@@ -16,6 +16,7 @@ exports.login = async (req, res) => {
         const accessToken = await get_access_token();
         const existUser = await user.findOne({ username: username, password: password });
         const existUserEmail = await user.findOne({ username: username });
+        console.log(existUserEmail);
         if (existUser) {
             if (true) {
                 const response = await axios.post(
@@ -68,18 +69,20 @@ exports.login = async (req, res) => {
             }
         } else {
             if (existUserEmail) {
+                console.log(existUserEmail.isBlock);
                 if(existUserEmail.faildLogin < 5){
                     existUserEmail.faildLogin += 1;
                     existUserEmail.save();
-                    res.json({ responseCode: '01', responseMessage: 'you login failded ' + existUserEmail.faildLogin + ' times' });
+                    res.json({ responseCode: '012', responseMessage: 'Bạn đã nhập sai ' + existUserEmail.faildLogin + ' lần' });
                 }else{
                     existUserEmail.isBlock = true;
                     existUserEmail.save();
                     res.json({ responseCode: '01', responseMessage: 'user is block' });
                 }
+            }else{
+                console.log("Login failed");
+                res.json({ responseCode: '01', responseMessage: 'password or username is not correct' });
             }
-            console.log("Login failed");
-            res.json({ responseCode: '01', responseMessage: 'password or username is not correct' });
         }
     } catch (err) {
         console.log(err);
