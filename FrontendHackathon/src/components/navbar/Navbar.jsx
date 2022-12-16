@@ -43,14 +43,15 @@ function Navbar({user}) {
                                             alt=""
                                             className="navBarImgUser"
                                         />
-                                        <span>{user.fullName} - </span>
-                                        <span>{user.amount} VND</span>
+                                        <span>{user.fullName} </span>
                                     </Link>
                                 </div>
 
                                 {open &&
                                     <div className='userChoses'>
                                         <ul className='userChosesStyle'>
+                                            <li >{user.amount} VND</li>
+                                            <li >{user.accountNo}</li>
                                             <li onClick={() => setOpen(!open)}><Link to="/change_password" className='link hover'>Thay đổi mật khẩu</Link></li>
                                             <li onClick={logout}><Link to="" className='link hover'>Thoat</Link></li>
                                         </ul>

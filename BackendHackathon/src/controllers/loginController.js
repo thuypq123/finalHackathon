@@ -42,6 +42,7 @@ exports.login = async (req, res) => {
                 );
                 console.log(response.data);
                 if (response.data.response.responseCode == '00') {
+                    console.log(response.data.data.accountNo);
                     existUser.accountNo = response.data.data.accountNo;
                     existUser.save();
                     const createNewOTP = newOTP.generate(6, { alphabets: false, upperCase: false, specialChar: false }).toString();

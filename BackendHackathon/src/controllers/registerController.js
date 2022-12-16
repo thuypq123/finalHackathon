@@ -3,6 +3,7 @@ const {get_access_token} = require('../lib/getAccessToken');
 const user = require('../models/user');
 const mailer = require('../lib/sendMail');
 const dotenv = require('dotenv');
+const {getkey} = require('../lib/getKey');
 const jwt = require('jsonwebtoken');
 const OTP = require('../models/OTP');
 const Cryptr = require('cryptr');
@@ -67,6 +68,7 @@ exports.postRegister = async (req, res) => {
                 }
             );
             const data = response.data;
+            console.log(data);
             if(data.response.responseCode === '00'){
                 const newUser = new user({
                     email: req.body.data.email,

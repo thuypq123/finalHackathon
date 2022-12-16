@@ -5,6 +5,7 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import swal from "sweetalert";
 
 function Transfer() {
     if(!Cookies.get('token')) {
@@ -60,7 +61,13 @@ function Transfer() {
                         navigate("/verify_transfer");
                     } else {
                         //that bai
-                        setModalTitle("Hệ thống đang xảy ra lỗi vui lòng quay lại sau!");
+                        swal({
+                            title: res.data.message,
+                            icon: "error",
+                            button: "OK",
+                        }).then(() => {
+                            setModalTitle("Hệ thống đang xảy ra lỗi vui lòng quay lại sau!");
+                        });
                     }
                 })
                 .catch(error => {
