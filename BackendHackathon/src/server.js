@@ -5,6 +5,8 @@ var bodyParser = require('body-parser')
 const app = express();
 const port = 3000;
 
+const adminRouter = require('./routers/adminRouter');
+app.use('/admin', adminRouter);
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use((req, res, next) => {

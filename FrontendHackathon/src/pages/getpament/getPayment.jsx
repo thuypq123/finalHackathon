@@ -7,6 +7,13 @@ import { v4 as uuidv4 } from 'uuid';
 import Cookies from "js-cookie";
 import swal from "sweetalert";
 import userImage from "../../Images/user.png"
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 function GetPayment({inSystem, type}) {
     if(!Cookies.get('token')) {
@@ -40,11 +47,18 @@ function GetPayment({inSystem, type}) {
         }
         await axios.post(url, JSON.stringify(values), config)
             .then(res => {
-                console.log(res.data.data);
                 if (res.data.response.responseCode === "00") {
-                    setPayMents(res.data.data.listPayment);
-                } else {
-                    setError("Hệ thống đang xảy ra lỗi vui lòng quay lại sau!");
+                    if (res.data.data.listPayment === undefined || res.data.data.listPayment.length === 0) {
+                        setPayMents(res.data.data.listPayment);
+                        swal({
+                            title: "Thông báo",
+                            text: "Không có dư liệu",
+                            icon: "warning",
+                            button: "OK",
+                        })
+                    }else{
+                        setPayMents(res.data.data.listPayment);
+                    }
                 }
             })
             .catch(error => {
@@ -53,7 +67,7 @@ function GetPayment({inSystem, type}) {
             })
     }
     return (
-        <div className='transferHisPage'>
+        <div style={{margin:120}} className='transferHisPage'>
             <div className='transferHisContainer'>
                 <div className='transferHisWrapper'>
                     <h2>{type}</h2>
@@ -69,23 +83,35 @@ function GetPayment({inSystem, type}) {
                         </div>
                     </form>
                 </div>
-                <div className='transferWrapperResult '>
-                    <div className="transFerResult">   
-                        {payMents.length>0 && payMents.map((item, index) => {
-                            return <div className="transFerResultCard" key={index}>
-                                <img
-                                    src={userImage}
-                                    style={{ width: '50px', height: '50px' }}
-                                    className='resultImg'
-                                />
-                                <div className="transFerResultItem">
-                                    <span>{item.fee}</span>
-                                    <span>{item.description}</span>
-                                </div>
-                            </div>
-                        })}
-                    </div>
-                </div>
+                <TableContainer sx={{ height: '48%'}} component={Paper}>
+                <Table aria-label="simple table">
+                    <TableHead>
+                    <TableRow>
+                        <TableCell>STK</TableCell>
+                        <TableCell align="right">SDID</TableCell>
+                        <TableCell align="right">description</TableCell>
+                        <TableCell align="right">Số Tiền</TableCell>
+                        <TableCell align="right">Thời Gian</TableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {payMents != undefined && payMents.map((row) => (
+                        <TableRow
+                        key={row.name}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                        <TableCell component="th" scope="row">
+                            {row.accNo}
+                        </TableCell>
+                        <TableCell align="right">{row.sdId}</TableCell>
+                        <TableCell align="right">{row.description}</TableCell>
+                        <TableCell align="right">{row.amount}</TableCell>
+                        <TableCell align="right">{row.date}</TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+                </TableContainer>
             </div>
         </div>
     )

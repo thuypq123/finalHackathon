@@ -7,6 +7,13 @@ import { v4 as uuidv4 } from 'uuid';
 import Cookies from "js-cookie";
 import swal from "sweetalert";
 import userImage from "../../Images/user.png"
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 function TransferHistory() {
     if(!Cookies.get('token')) {
@@ -84,31 +91,35 @@ function TransferHistory() {
                         </div>
                     </form>
                 </div>
-                <div className='transferWrapperResult '>
-                    <h2 className="headerTransferWrapperResult">Lịch sử giao dịch... </h2>
-                    <div className="transFerResult">
-                        
-                        {tranHis && tranHis.map((item, index) => {
-                            return <div className="transFerResultCard" key={index}>
-                                <img
-                                    src={userImage}
-
-                                    className='resultImg'
-                                />
-                                <div className="transFerResultItem">
-                                    <span>{item.accountNo}</span>
-                                    <span>{item.amount}</span>
-                                    <span>{item.toAccNo}</span>
-                                    <span>{item.description}</span>
-                                    <span>{item.date}</span>
-                                </div>
-                            </div>
-                        })}
-
-                    </div>
-
-
-                </div>
+                <TableContainer sx={{ height: '48%'}} component={Paper}>
+                <Table aria-label="simple table">
+                    <TableHead>
+                    <TableRow>
+                        <TableCell>STK</TableCell>
+                        <TableCell align="right">STK Nhận</TableCell>
+                        <TableCell align="right">description</TableCell>
+                        <TableCell align="right">Số Tiền</TableCell>
+                        <TableCell align="right">Thời Gian</TableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {tranHis != undefined && tranHis.map((row) => (
+                        <TableRow
+                        key={row.name}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                        <TableCell component="th" scope="row">
+                            {row.accountNo}
+                        </TableCell>
+                        <TableCell align="right">{row.toAccNo}</TableCell>
+                        <TableCell align="right">{row.description}</TableCell>
+                        <TableCell align="right">{row.amount}</TableCell>
+                        <TableCell align="right">{row.date}</TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+                </TableContainer>
             </div>
 
         </div>

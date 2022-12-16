@@ -17,6 +17,7 @@ import CheckOtpCodePayment from "./pages/checkotpcode/checkOtpCodePayment";
 import GetPayment from "./pages/getpament/getPayment";
 import { useEffect, useState } from "react";
 import Payment from "./pages/payment/Payment";
+import { BubblyContainer, BubblyLink } from "react-bubbly-transitions";
 import swal from "sweetalert";
 function App() {
   const [user, setUser] = useState({});
@@ -52,6 +53,7 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
+    <BubblyContainer />
       <div>  
       <Navbar user={user}/>
         <Routes>

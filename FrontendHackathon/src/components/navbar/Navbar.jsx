@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import "./navbar.css"
 import Cookies from 'js-cookie';
+import { BubblyContainer, BubblyLink } from "react-bubbly-transitions";
 function Navbar({user}) {
     const [open, setOpen] = useState(false);
     const menuUserSetting = ["Thay đổi mật khẩu", "Thoát"]
@@ -27,17 +28,17 @@ function Navbar({user}) {
                     <>
                         <div className='navBarOption'>
                             <ul className='navBarOptionUl'>
-                                <li><Link to="/transfer" className="link hover"> Chuyển khoản</Link></li>
-                                <li><Link to="/transferHistory" className="link hover"> Lịch sử giao dịch</Link></li>
-                                <li><Link to="/payment" className="link hover"> Thanh toán học phí</Link></li>
-                                <li><Link to="/getpayment" className="link hover"> Danh sách học phí</Link></li>
-                                <li><Link to="/paymentHis" className="link hover">lich su học phí</Link></li>
+                                <li><BubblyLink colorStart="#F9B500" to="/transfer" className="link hover"> Chuyển khoản</BubblyLink></li>
+                                <li><BubblyLink colorStart="#F9B500" to="/transferHistory" className="link hover"> Lịch sử giao dịch</BubblyLink></li>
+                                <li><BubblyLink colorStart="#F9B500" to="/payment" className="link hover"> Thanh toán học phí</BubblyLink></li>
+                                <li><BubblyLink colorStart="#F9B500" to="/getpayment" className="link hover"> Danh sách học phí</BubblyLink></li>
+                                <li><BubblyLink colorStart="#F9B500" to="/paymentHis" className="link hover">lich su học phí</BubblyLink></li>
                             </ul>
                         </div>
                         <div className="navbarUser">
                             <div>
                                 <div onClick={() => setOpen(!open)} >
-                                    <Link to="/" className='link navBarInfo'>
+                                    <Link className='link navBarInfo'>
                                         <img
                                             src={userImage}
                                             alt=""

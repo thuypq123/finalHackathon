@@ -31,3 +31,7 @@ li{
   font-size: 20px;
  
 }
+
+body .react-bubbly-transitions__bubbly-link {
+  color: #bca35f;
+}
