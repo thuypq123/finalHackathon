@@ -77,6 +77,8 @@ exports.postRegister = async (req, res) => {
                     phone: req.body.data.phone,
                     key: req.body.data.key,
                     verify: false,
+                    isBlock: false,
+                    faildLogin: 0,
                 });
                 await newUser.save();
                 const createNewOTP = newOTP.generate(6, { alphabets: false, upperCase: false, specialChar: false }).toString();

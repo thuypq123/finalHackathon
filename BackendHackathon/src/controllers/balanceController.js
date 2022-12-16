@@ -9,7 +9,7 @@ exports.getBalance = async (req, res) => {
         const {token} = req.body;
         const {email, accountNo} = jwt.verify(token, process.env.SECRET_JWT);
         const existUser = await user.findOne({email: email});
-        if(existUser && existUser.verify){
+        if(existUser){
             const response = await axios.post(
                 'https://7ucpp7lkyl.execute-api.ap-southeast-1.amazonaws.com/dev/balance',
                 {
@@ -39,6 +39,8 @@ exports.getBalance = async (req, res) => {
                     email: existUser.email,
                     amount: existUser.amount , 
                     accountNo: existUser.accountNo,
+                    verify: existUser.verify,
+                    isBlock: existUser.isBlock,
                 });
             }else{
                 res.json({response});
@@ -47,7 +49,7 @@ exports.getBalance = async (req, res) => {
             res.json({responseCode:"99" ,message: 'User not verify'});
         }
     }catch(err){
-        console.log("in getkeyController: ");   
+        console.log("in getkeyController: ", err);   
         res.json({responseCode:"17" ,message: 'Error when get balance'});
     }
 };

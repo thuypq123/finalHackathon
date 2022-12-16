@@ -5,7 +5,7 @@ exports.get_Key = async (req, res) => {
     try{
         res.json(await get_Key());
     }catch(err){
-        console.log("in getkeyController: ");   
-        res.status(200).json({message: 'Error'});
+        console.log( err);   
+        res.status(200).json({message: err});
     }
 }

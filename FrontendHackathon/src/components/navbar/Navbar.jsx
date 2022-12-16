@@ -9,6 +9,10 @@ import Cookies from 'js-cookie';
 function Navbar({user}) {
     const [open, setOpen] = useState(false);
     const menuUserSetting = ["Thay đổi mật khẩu", "Thoát"]
+    const logout = () => {
+        Cookies.remove('token');
+        window.location.replace("/")
+    }
     console.log(user)
     return (
         <div className="navbar">
@@ -48,7 +52,7 @@ function Navbar({user}) {
                                     <div className='userChoses'>
                                         <ul className='userChosesStyle'>
                                             <li onClick={() => setOpen(!open)}><Link to="/change_password" className='link hover'>Thay đổi mật khẩu</Link></li>
-                                            <li onClick={() => setOpen(!open)}><Link to="" className='link hover'>Thoat</Link></li>
+                                            <li onClick={logout}><Link to="" className='link hover'>Thoat</Link></li>
                                         </ul>
 
                                     </div>}

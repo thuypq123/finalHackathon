@@ -15,8 +15,9 @@ exports.login = async (req, res) => {
     try {
         const accessToken = await get_access_token();
         const existUser = await user.findOne({ username: username, password: password });
+        const existUserEmail = await user.findOne({ username: username });
         if (existUser) {
-            if (existUser.verify) {
+            if (true) {
                 const response = await axios.post(
                     'https://7ucpp7lkyl.execute-api.ap-southeast-1.amazonaws.com/dev/login',
                     {
@@ -38,6 +39,7 @@ exports.login = async (req, res) => {
                         }
                     }
                 );
+                console.log(response.data);
                 if (response.data.response.responseCode == '00') {
                     existUser.accountNo = response.data.data.accountNo;
                     existUser.save();
@@ -65,6 +67,17 @@ exports.login = async (req, res) => {
                 res.json({ responseCode: '01', responseMessage: 'user not verify' });
             }
         } else {
+            if (existUserEmail) {
+                if(existUserEmail.faildLogin < 5){
+                    existUserEmail.faildLogin += 1;
+                    existUserEmail.save();
+                    res.json({ responseCode: '01', responseMessage: 'you login failded ' + existUserEmail.faildLogin + ' times' });
+                }else{
+                    existUserEmail.isBlock = true;
+                    existUserEmail.save();
+                    res.json({ responseCode: '01', responseMessage: 'user is block' });
+                }
+            }
             console.log("Login failed");
             res.json({ responseCode: '01', responseMessage: 'password or username is not correct' });
         }

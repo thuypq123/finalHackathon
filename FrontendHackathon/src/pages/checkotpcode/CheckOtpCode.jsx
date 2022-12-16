@@ -9,9 +9,6 @@ import axios from 'axios';
 import './checkOtpCode.css';
 import swal from 'sweetalert';
 function CheckOtpCode({user}) {
-  if(!Cookies.get('token')) {
-    window.location.href = "/login";
-  }
     var params = window.location.pathname;
     params = params.split("/")[1];
     const url = "http://localhost:3000/"+params;

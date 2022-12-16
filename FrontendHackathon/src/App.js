@@ -17,6 +17,7 @@ import CheckOtpCodePayment from "./pages/checkotpcode/checkOtpCodePayment";
 import GetPayment from "./pages/getpament/getPayment";
 import { useEffect, useState } from "react";
 import Payment from "./pages/payment/Payment";
+import swal from "sweetalert";
 function App() {
   const [user, setUser] = useState({});
     useEffect(() => {
@@ -34,6 +35,17 @@ function App() {
           );
           const userRes = await user.json();
           setUser(userRes);
+          if(userRes.verify == false || userRes.isBlock == true){
+            swal({
+                title: "Thông báo",
+                text: "Tài khoản của bạn đã bị khóa hoặc chưa được xác thực",
+                icon: "warning",
+                button: "OK",
+            }).then(() => {
+              Cookies.remove('token');
+              window.location.href = "/login";
+            });
+          }
           console.log(userRes);
       };
       getUser();

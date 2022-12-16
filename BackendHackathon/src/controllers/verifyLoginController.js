@@ -8,7 +8,7 @@ const axios = require('axios');
 exports.verifyLogin = async (req, res) => {
     try{
         const existUser = await user.findOne({email: req.body.email});
-        if(existUser && existUser.verify){
+        if(existUser){
             const existOTP = (await OTP.find({email: req.body.email, type: 'login', status: false}).sort({_id: -1}).limit(1))[0];
             console.log(existOTP);
             if(existOTP){
